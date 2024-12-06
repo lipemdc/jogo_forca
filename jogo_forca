@@ -1,94 +1,85 @@
-print("OLÁ, SEJA BEM VINDO AO JOGO DA FORCA\nCRIADO POR LUIZ FELIPE E LUÍS EDUARDO.\n")
+print("OLÁ, SEJA BEM VINDO AO JOGO DA FORCA\nCRIADO POR LUIZ FELIPE E LUIZ EDUARDO.\n")
 
 import random
 
-confirmar = False
-
-tema = int(input("PRIMEIO, DENTRE ESSES TEMAS QUAL VOCÊ QUER JOGAR?\n1: TIMES DE FUTEBOL\n2: FRUTAS\n3: CORES\n4: ANIMAIS\n5: ALEATORIO "))
-
-while confirmar == False:
+def escolher_tema ():
+    tema = int(input("PRIMEIO, DENTRE ESSES TEMAS QUAL VOCÊ QUER JOGAR?\n1: TIMES DE FUTEBOL\n2: FRUTAS\n3: CORES\n4: ANIMAIS "))
     
-    times = ["flamengo", "botafogo", "fluminense", "figueirense","icasa",]
+    times = ["flamengo", "botafogo", "fluminense", "figueirense","icasa"]
     frutas = ["banana", "abacate", "melancia", "lichia", "acerola", "pitaia"]
-    cores = ["vermelho", "azul"]
-    animais = ["macaco", "baleia"]
+    cores = ["vermelho", "azul", "ciano", "magenta", "marrom", "violeta"]
+    animais = ["macaco", "baleia", "gato", "cachorro", "rinoceronte"]
     
     if tema == 1:
         palavra = random.choice(times)
         
         print(f"MUITO BEM, O SEU TEMA É TIME DE FUTEBOL")
         
-        confirmar = True
-        
     elif tema == 2:
         palavra = random.choice(frutas)
         
         print("MUITO BEM, O SEU TEMA É FRUTAS")
-        
-        confirmar = True
         
     elif tema == 3:
         palavra = random.choice(cores)
         
         print("MUITO BEM, O SEU TEMA É CORES")
         
-        confirmar = True
-        
     elif tema == 4:
         palavra = random.choice(animais)
         
         print("MUITO BEM, O SEU TEMA É ANIMAIS")
-        
-        confirmar = True
-        
-    elif tema == 5:
-        tema = random.randint(1, 4)
 
-        
     else:
-        print("PORFAVOR ESCOLHA UM NUMERO DE 1 A 5")
+        print("POR FAVOR ESCOLHA UM NUMERO DE 1 A 4")
         
         tema = int(input())
-        
+    
+    return palavra
 
-vitoria = 0
-vidas = 5
-chute= " "
-letras_chutadas = []
-letras_acertadas = 0 
 
-while vidas > 0:
-
+def jogar():
+    
+    palavra = escolher_tema()
     vitoria = 0
+    vidas = 5
+    chute= " "
+    letras_chutadas = []
+    letras_acertadas = 0
 
-    chute = input("Chute uma letra: ").lower()
-    letras_chutadas.append(chute)
+    while vidas > 0:
 
-    if chute.lower() not in palavra and vidas != 1:
-        vidas -= 1
-        print(f"ERROU. CUIDADO, VOCÊ AGORA SÓ TEM {vidas} VIDAS")
-    elif vidas == 1:
-        break
+        underscore = 0
 
-    for i in palavra:
-        if i in letras_chutadas :
-            print(i, end=" ")
+        chute = input("Chute uma letra: ").lower()
+        letras_chutadas.append(chute)
 
-        else:
-            print("_", end=" ")
+        if chute.lower() not in palavra :
+            vidas -= 1
+            print(f"ERROU. CUIDADO, VOCÊ AGORA SÓ TEM {vidas} VIDAS")
+            
 
-    for i in palavra:
-        if not i in letras_chutadas:
-            vitoria += 1
 
-    if vitoria == 0:
-        print("YOU WIN")
+        for i in palavra:
+            if i in letras_chutadas :
+                print(i, end=" ")
+
+            else:
+                print("_", end=" ")
+
+        for i in palavra:
+            if not i in letras_chutadas:
+                underscore += 1
+
+        if underscore == 0:
+            print("YOU WIN")
+        
+            underscore = True
+            break 
         
         
-        vitoria = True
-        break
+    if underscore != True:
+        print(f"QUE PENA, VOCÊ PERDEU. SUA PALAVRA ERA: {palavra}")
         
         
-        
-if vitoria != True:
-    print(f"QUE PENA, VOCÊ PERDEU. SUA PALAVRA ERA: {palavra}")
+jogar()
